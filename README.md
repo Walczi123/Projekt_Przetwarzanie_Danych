@@ -21,5 +21,5 @@ Uwagi ogólne:
 
 1. regresja logistyczna - Ala
 2. regresja Poisson - Emil
-3. klasyfikacja wielomianowa - Patryk	
+3. klasyfikacja wielomianowa - Patryk	(https://machinelearningmastery.com/polynomial-features-transforms-for-machine-learning/)
 4. NN? - Dodatek
