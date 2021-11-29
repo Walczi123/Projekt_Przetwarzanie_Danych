@@ -20,6 +20,6 @@ Uwagi ogólne:
 # Plan działania
 
 1. regresja logistyczna - Ala
-3. klasyfikacja wieloklasowa (SVM) - Patryk	(https://machinelearningmastery.com/polynomial-features-transforms-for-machine-learning/)
+3. klasyfikacja wieloklasowa (SVN) - Patryk
 4. NN - Dodatek
 5. xgboost -
