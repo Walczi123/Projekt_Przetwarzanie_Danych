@@ -11,6 +11,7 @@ Analiza, oprócz wstępnej eksploracji danych, zaprojektowania modelu uczenia i 
 2. Czy lepiej stworzyć model globalny dla całego miasta, czy dla pojedynczych lini lub przystanków?
 
 3. Czy istnieją zewnętrzne źródła danych, które da się wykorzystać dla zwiększenia jakości predykcji?
+- mapa miasta? 
 
 
 Uwagi ogólne:
