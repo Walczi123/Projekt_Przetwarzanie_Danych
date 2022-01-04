@@ -24,3 +24,9 @@ Uwagi ogólne:
 3. klasyfikacja wieloklasowa (SVN) - Patryk
 4. NN - Dodatek
 5. xgboost -
+
+Podział miedzy liniami/kursami - wazny podział na testowy i treningowy
+Zmapować regresje do katergorii i porównać 
+
+dla regresji R kwadrat 
+3 pytanie to zrozumienie danych, ich odwzorowanie
