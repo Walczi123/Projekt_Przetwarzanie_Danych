@@ -12,6 +12,7 @@ Analiza, oprócz wstępnej eksploracji danych, zaprojektowania modelu uczenia i 
 
 3. Czy istnieją zewnętrzne źródła danych, które da się wykorzystać dla zwiększenia jakości predykcji?
 - mapa miasta? 
+- dane o kolejności przystanków? 
 
 
 Uwagi ogólne:
