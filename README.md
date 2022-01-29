@@ -31,3 +31,8 @@ Zmapować regresje do katergorii i porównać
 
 dla regresji R kwadrat 
 3 pytanie to zrozumienie danych, ich odwzorowanie
+
+Las losowy
+
+wrażliwość sensivity
+
