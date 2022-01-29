@@ -36,3 +36,4 @@ Las losowy
 
 wrażliwość sensivity
 
+https://towardsdatascience.com/classification-of-unbalanced-datasets-8576e9e366af

@@ -124,7 +124,8 @@ def find_clusters(speeds, iterations, df, column, name = "Zatłoczenie"):
     
     return df
 
-CROWDING = ['pusto','małe zatłoczenie', 'średnie zatłoczenie', 'duze zatłoczenie', 'olbrzymie zatłoczenie']
+# CROWDING = ['pusto','małe zatłoczenie', 'średnie zatłoczenie', 'duze zatłoczenie', 'olbrzymie zatłoczenie']
+CROWDING = [0,1,2]
 
 def get_clustered_data_with_bus_only(path:str, crowding:list = CROWDING, colum = 'Liczba pasaz. po odjezdzie' ):
     df = get_data(path)
@@ -144,7 +145,7 @@ def get_numeric_name(df:pd.DataFrame, column:str, drop:bool = False):
 
     return df
 
-def split_into_lines(df:pd.DataFrame, drop_line:bool = False, lower_bound:int = 0):
+def split_into_lines(df:pd.DataFrame, drop_line:bool = False, lower_bound:int = 4000):
     lines  = df['Nr linii'].unique()
     d = dict()
     for line in lines:
