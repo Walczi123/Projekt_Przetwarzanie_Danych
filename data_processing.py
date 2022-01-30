@@ -8,6 +8,7 @@ from math import floor
 from sklearn.model_selection import train_test_split
 import seaborn as sns
 from sklearn.metrics import precision_recall_fscore_support
+from sklearn.metrics import accuracy_score
 
 locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
 plt.style.use('ggplot')
@@ -126,14 +127,24 @@ def find_clusters(speeds, iterations, df, column, name = "Zatłoczenie"):
     
     return df
 
+def get_clustering_dict(df:pd.DataFrame):
+    df_unique = np.unique(df[["Liczba pasaz. przed", 'class']], axis=0)
+    classes = [0,1,2]
+    d = dict()
+    for c in classes:
+        for x in [x[0] for x in df_unique if x[1] == c]:
+            d[x] = c
+    return d
+
 # CROWDING = ['pusto','małe zatłoczenie', 'średnie zatłoczenie', 'duze zatłoczenie', 'olbrzymie zatłoczenie']
 CROWDING = [0,1,2]
 
-def get_clustered_data_with_bus_only(path:str, crowding:list = CROWDING, colum = 'Liczba pasaz. po odjezdzie' ):
+def get_clustered_data_with_bus_only(path:str, crowding:list = CROWDING, colum = "Liczba pasaz. przed" ):
     df = get_data(path)
     df = drop_other_types(df)
     df = find_clusters(crowding, 10, df, colum)
-    return df
+    clustering_dict = get_clustering_dict(df)
+    return df, clustering_dict
 
 def get_numeric_name(df:pd.DataFrame, column:str, drop:bool = False):
     stations_set = set(df[column].values)
@@ -208,3 +219,14 @@ def plot_classification_report(y_tru, y_prd, figsize=(10, 10), ax=None):
                 xticklabels=xticks,
                 yticklabels=yticks,
                 ax=ax)
+
+def classification_of_list(list:list, clastering_dict:dict):
+    return [clastering_dict[l] for l in list]
+
+def regression_to_classification(y, prediceted, clastering_dict:dict):
+    return [clastering_dict[l] for l in prediceted], [clastering_dict[l] for l in y]
+
+def accuracy_of_regression(y, prediceted, clustering_dict:dict):
+    prediceted, y = regression_to_classification(y, prediceted, clustering_dict)
+    print("Accuracy: {:.5f}".format(accuracy_score(y, prediceted)))
+    plot_classification_report(y, prediceted)
