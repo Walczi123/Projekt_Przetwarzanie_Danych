@@ -7,6 +7,7 @@ from matplotlib import pyplot as plt
 from math import floor
 from sklearn.model_selection import train_test_split
 import seaborn as sns
+from sklearn.metrics import precision_recall_fscore_support
 
 locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
 plt.style.use('ggplot')
@@ -64,6 +65,7 @@ def parse_data(df:pd.DataFrame):
 
     df['Godzina odjazdu'] = df['Rozkładowy czas odjazdu'].apply(lambda x: x.hour + x.minute/60 + x.second/3600)
     df['Godzina odjazdu przedział'] = df['Rozkładowy czas odjazdu'].apply(lambda x: x.hour * 4 + floor(x.minute/15))
+    df['Opóźnienie w minutach'] = (df['Rzeczywisty czas odjazdu'] - df['Rozkładowy czas odjazdu']).apply(lambda x: int(x.total_seconds()//60))
 
 def add_type(df:pd.DataFrame):
     trans_type = []
@@ -187,4 +189,22 @@ def get_train_and_test_for_lines(line:pd.DataFrame, X_columns:list, y_columns:li
     y = line[y_columns]
     return train_test_split(X, y, test_size=test_size, random_state=random_state)
 
+def plot_classification_report(y_tru, y_prd, figsize=(10, 10), ax=None):
 
+    plt.figure(figsize=figsize)
+
+    xticks = ['precision', 'recall', 'f1-score'] #, 'support']
+    yticks = list(np.unique(y_tru))
+    yticks += ['avg']
+
+    rep = np.array(precision_recall_fscore_support(y_tru, y_prd)).T
+    avg = np.mean(rep, axis=0)
+    avg[-1] = np.sum(rep[:, -1])
+    rep = np.insert(rep, rep.shape[0], avg, axis=0)
+
+    sns.heatmap(rep[:, :-1],
+                annot=True,
+                cbar=False,
+                xticklabels=xticks,
+                yticklabels=yticks,
+                ax=ax)
