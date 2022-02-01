@@ -137,7 +137,7 @@ def get_clustering_dict(df:pd.DataFrame):
     return d
 
 # CROWDING = ['pusto','małe zatłoczenie', 'średnie zatłoczenie', 'duze zatłoczenie', 'olbrzymie zatłoczenie']
-CROWDING = [0,1,2]
+CROWDING = ['małe zatłoczenie', 'średnie zatłoczenie', 'duze zatłoczenie']
 
 def get_clustered_data_with_bus_only(path:str, crowding:list = CROWDING, colum = "Liczba pasaz. przed" ):
     df = get_data(path)
