@@ -206,9 +206,9 @@ def plot_classification_report(y_tru, y_prd, figsize=(10, 10), ax=None):
 
     xticks = ['dokładność', 'czułość', 'f1'] #, 'support']
     if (len(list(np.unique(y_tru)))==2):
-        yticks = ["małe zatłoczenie", "duże zatłoczenie"]
+        yticks = ["małe zatł.", "duże zatł."]
     if (len(list(np.unique(y_tru)))==3):
-        yticks = ["małe zatłoczenie", "średnie zatłoczenie", "duże zatłoczenie"]
+        yticks = ["małe zatł.", "średnie zatł.", "duże zatł."]
     yticks += ['średnia']
 
     rep = np.array(precision_recall_fscore_support(y_tru, y_prd)).T
@@ -216,12 +216,14 @@ def plot_classification_report(y_tru, y_prd, figsize=(10, 10), ax=None):
     avg[-1] = np.sum(rep[:, -1])
     rep = np.insert(rep, rep.shape[0], avg, axis=0)
 
+    sns.set(font_scale=1.5)
     sns.heatmap(rep[:, :-1],
                 annot=True,
                 cbar=False,
                 xticklabels=xticks,
                 yticklabels=yticks,
-                ax=ax)
+                ax=ax, 
+                annot_kws={"size": 25})
 
 def classification_of_list(list:list, clastering_dict:dict):
     return [clastering_dict[l] for l in list]
