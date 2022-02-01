@@ -127,23 +127,23 @@ def find_clusters(speeds, iterations, df, column, name = "Zatłoczenie"):
     
     return df
 
-def get_clustering_dict(df:pd.DataFrame):
+# CROWDING = ['pusto','małe zatłoczenie', 'średnie zatłoczenie', 'duze zatłoczenie', 'olbrzymie zatłoczenie']
+
+CROWDING = [0, 1, 2]
+
+def get_clustering_dict(df:pd.DataFrame, crowding:list = CROWDING):
     df_unique = np.unique(df[["Liczba pasaz. przed", 'class']], axis=0)
-    classes = [0,1,2]
     d = dict()
-    for c in classes:
+    for c in crowding:
         for x in [x[0] for x in df_unique if x[1] == c]:
             d[x] = c
     return d
-
-# CROWDING = ['pusto','małe zatłoczenie', 'średnie zatłoczenie', 'duze zatłoczenie', 'olbrzymie zatłoczenie']
-CROWDING = ['małe zatłoczenie', 'średnie zatłoczenie', 'duze zatłoczenie']
 
 def get_clustered_data_with_bus_only(path:str, crowding:list = CROWDING, colum = "Liczba pasaz. przed" ):
     df = get_data(path)
     df = drop_other_types(df)
     df = find_clusters(crowding, 10, df, colum)
-    clustering_dict = get_clustering_dict(df)
+    clustering_dict = get_clustering_dict(df, crowding)
     return df, clustering_dict
 
 def get_numeric_name(df:pd.DataFrame, column:str, drop:bool = False):
@@ -204,9 +204,12 @@ def plot_classification_report(y_tru, y_prd, figsize=(10, 10), ax=None):
 
     plt.figure(figsize=figsize)
 
-    xticks = ['precision', 'recall', 'f1-score'] #, 'support']
-    yticks = list(np.unique(y_tru))
-    yticks += ['avg']
+    xticks = ['dokładność', 'czułość', 'f1'] #, 'support']
+    if (len(list(np.unique(y_tru)))==2):
+        yticks = ["małe zatłoczenie", "duże zatłoczenie"]
+    if (len(list(np.unique(y_tru)))==3):
+        yticks = ["małe zatłoczenie", "średnie zatłoczenie", "duże zatłoczenie"]
+    yticks += ['średnia']
 
     rep = np.array(precision_recall_fscore_support(y_tru, y_prd)).T
     avg = np.mean(rep, axis=0)
